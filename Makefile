@@ -1,7 +1,8 @@
-#
-# the Makefile for I10 UART Test
-#
-CROSS_COMPILE	:=arm-none-linux-gnueabi-
+
+TARGETS = ttyforward
+
+CROSS_COMPILE	:=
+#CROSS_COMPILE	:=arm-none-linux-gnueabi-
 
 CC = $(CROSS_COMPILE)gcc
 CPP = $(CROSS_COMPILE)g++
@@ -14,8 +15,6 @@ STRIP = $(CROSS_COMPILE)strip
 
 .cpp.o:
 	$(CPP) $(GLOBAL_DEFS) $(CFLAGS) -c -o $@ $<
-
-TARGETS = ttyforward
 
 SRC_OBJS = main.o
 

@@ -197,9 +197,9 @@ static void show_usage(const char* program)
 	printf("Usage:\n");
 	printf("%s <%s> <%s>\n", program, "tty device 1", "tty device 2");
 	printf("\n");
-	printf("tty device syntax : <device name>[,baud rate]\n");
+	printf("tty device syntax : <device name>[,baud rate]\n\n");
 	printf("Examples:\n");
-	printf("\t%s /dev/ttyP1,115200 /dev/ttyGS0,115200\n", program);
+	printf("\t%s /dev/ttyP1,115200 /dev/ttyGS0,115200\n\n", program);
 
 }
 
@@ -316,15 +316,16 @@ int main(int argc, char** argv)
 	parse_serial_name(argv[1], &s1name, &s1baud, 115200);
 	parse_serial_name(argv[2], &s2name, &s2baud, 115200);
 
+	printf("set up %s(%d) <--> %s(%d) forwarding ...\n", \
+			s1name, s1baud, s2name, s2baud);
+
 	s1 = serial_open(s1name);
 	if (s1 == NULL) {
-		printf("cannot open %s\n", s1name);
 		return -1;
 	}
 
 	s2 = serial_open(s2name);
 	if (s2 == NULL) {
-		printf("cannot open %s\n", s2name);
 		serial_close(s1);
 		return -1;
 	}
@@ -337,6 +338,7 @@ int main(int argc, char** argv)
 
 	start_forward(s1, s2);
 
+	printf("clear off forwarding.\n");
 	serial_close(s2);
 	serial_close(s1);
 
